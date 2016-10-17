@@ -6,11 +6,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class SimpleOptimalChangeContext {
+public class NoCoinLimitOptimalChangeContext {
     private int amount;
     private List<Coin> toReturn = new ArrayList<>();
+    Iterator<Coin> it = Arrays.asList(Coin.values()).iterator();
+    Coin coin;
 
-    public SimpleOptimalChangeContext(int amount) {
+    public NoCoinLimitOptimalChangeContext(int amount) {
         this.amount = amount;
     }
 
@@ -23,14 +25,17 @@ public class SimpleOptimalChangeContext {
         amount -= coin.getDenomination();
     }
 
+    private void getNextCoin() {
+        coin = it.next();
+    }
+
     public Collection<Coin> getOptimalChangeFor() {
-        Iterator<Coin> it = Arrays.asList(Coin.values()).iterator();
-        Coin coin = it.next();
+        getNextCoin();
         while(needsCoin()) {
             if( coin.fitsIn(amount) ) {
                 addCoin(coin);
             } else {
-                coin = it.next();
+                getNextCoin();
             }
         }
         return toReturn;
