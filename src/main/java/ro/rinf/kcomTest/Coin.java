@@ -1,0 +1,15 @@
+package ro.rinf.kcomTest;
+
+public enum Coin {
+	ONE(1), TWO(2), FIVE(5), TEN(10), TWENTY(20), FIFTY(50), HUNDRED(100);
+
+	private final int denomination;
+
+	Coin(int denomination) {
+		this.denomination = denomination;
+	}
+
+	public int getDenomination() {
+		return denomination;
+	}
+}
