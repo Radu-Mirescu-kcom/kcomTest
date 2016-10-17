@@ -48,9 +48,7 @@ public class Inventory {
             Integer count = Integer.parseInt(properties.getProperty(pName));
             coinSets.add(new SameCoinSet(coin,count));
         }
-        coinSets.sort( (c1,c2) -> {
-            return c2.getCoin().getDenomination() - c1.getCoin().getDenomination();
-        });
+        coinSets.sort( (c1,c2) -> c2.getCoin().getDenomination() - c1.getCoin().getDenomination() );
     }
 
     public String toString() {
