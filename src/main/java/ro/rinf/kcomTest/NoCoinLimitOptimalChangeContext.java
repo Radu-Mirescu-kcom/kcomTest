@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class NoCoinLimitOptimalChangeContext implements OptimalChangeContext {
+public class NoCoinLimitOptimalChangeContext implements ChangeContext {
     protected int amount;
     protected List<Coin> toReturn = new ArrayList<>();
     private Iterator<Coin> it;
@@ -34,7 +34,7 @@ public class NoCoinLimitOptimalChangeContext implements OptimalChangeContext {
     }
 
     @Override
-    public Collection<Coin> getOptimalChangeFor() {
+    public Collection<Coin> getChangeFor() {
         initIterator();
         getNextCoin();
         while(needsCoin()) {

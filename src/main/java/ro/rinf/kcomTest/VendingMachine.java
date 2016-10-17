@@ -1,20 +1,19 @@
 package ro.rinf.kcomTest;
 
 import java.util.Collection;
-import java.util.function.Function;
 
 public class VendingMachine {
-	private final Function<Integer,OptimalChangeContext> factoryMethod;
+    private Inventory inventory;
 
-    public VendingMachine() {
-        factoryMethod = NoCoinLimitOptimalChangeContext::new;
-    }
-
-    public VendingMachine(Function<Integer,OptimalChangeContext> factoryMethod) {
-        this.factoryMethod = factoryMethod;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
 	public Collection<Coin> getOptimalChangeFor(int pence) {
-		return factoryMethod.apply(pence).getOptimalChangeFor();
+		return new NoCoinLimitOptimalChangeContext(pence).getChangeFor();
 	}
+
+    public Collection<Coin> getChangeFor(int pence) {
+        return new WithCoinLimitOptimalChangeContext(inventory,pence).getChangeFor();
+    }
 }

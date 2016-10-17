@@ -16,12 +16,12 @@ import static ro.rinf.kcomTest.Coin.TEN;
 import static ro.rinf.kcomTest.Coin.TWENTY;
 import static ro.rinf.kcomTest.Coin.TWO;
 
-public class WholeCoinsSet {
+public class Inventory {
     private final List<SameCoinSet> coinSets;
 
     private final Map<String,Coin> denomination2coinMap = new HashMap<>();
 
-    public WholeCoinsSet() {
+    public Inventory() {
         coinSets = new ArrayList<>();
         denomination2coinMap.put("100",HUNDRED);
         denomination2coinMap.put("50",FIFTY);
@@ -32,7 +32,7 @@ public class WholeCoinsSet {
         denomination2coinMap.put("1",ONE);
     }
 
-    public WholeCoinsSet(Properties properties) {
+    public Inventory(Properties properties) {
         this();
         Enumeration pNames = properties.propertyNames();
         while(pNames.hasMoreElements()) {

@@ -4,18 +4,18 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeContext {
-    private WholeCoinsSet wholeCoinsSet;
+    private Inventory inventory;
     private Iterator<SameCoinSet> coinsSetsIterator;
     private SameCoinSet currentCoinSet;
 
-    public WithCoinLimitOptimalChangeContext(WholeCoinsSet wcs, int amount) {
+    public WithCoinLimitOptimalChangeContext(Inventory wcs, int amount) {
         super(amount);
-        wholeCoinsSet = wcs;
+        inventory = wcs;
     }
 
     @Override
     protected void initIterator() {
-        coinsSetsIterator = wholeCoinsSet.iterator();
+        coinsSetsIterator = inventory.iterator();
     }
 
     @Override
@@ -27,6 +27,8 @@ public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeC
             } else {
                 coin = currentCoinSet.getCoin();
             }
+        } else {
+            throw new InsufficientCoinageException();
         }
     }
 
@@ -36,7 +38,7 @@ public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeC
     }
 
     @Override
-    public Collection<Coin> getOptimalChangeFor() {
+    public Collection<Coin> getChangeFor() {
         initIterator();
         getNextCoin();
         while(needsCoin()) {

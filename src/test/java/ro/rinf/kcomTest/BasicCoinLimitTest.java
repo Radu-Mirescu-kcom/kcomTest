@@ -17,7 +17,6 @@ import static ro.rinf.kcomTest.Coin.TWO;
 
 public class BasicCoinLimitTest {
     private VendingMachine mainVendingMachine;
-    private WithCoinLimitBuilder mainContextBuilder;
 
     @Before
     public void setup() {
@@ -29,46 +28,47 @@ public class BasicCoinLimitTest {
         mainProperties.put("5","200");
         mainProperties.put("2","11");
         mainProperties.put("1","23");
-        mainContextBuilder = new WithCoinLimitBuilder(mainProperties);
-        mainVendingMachine = new VendingMachine(mainContextBuilder::makeContext);
+        Inventory inventory = new Inventory(mainProperties);
+        mainVendingMachine = new VendingMachine();
+        mainVendingMachine.setInventory(inventory);
     }
 
     @Test
     public void test00() {
-        assertEquals(mainVendingMachine.getOptimalChangeFor(0).size(),0);
+        assertEquals(mainVendingMachine.getChangeFor(0).size(),0);
     }
 
     @Test
     public void test01() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(1);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),ONE);
     }
 
     @Test
     public void test02() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(2);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(2);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),TWO);
     }
 
     @Test
     public void test05() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(5);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(5);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),FIVE);
     }
 
     @Test
     public void test10() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(10);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(10);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),TEN);
     }
 
     @Test
     public void test20() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(20);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(20);
         assertEquals(result.size(),2);
         Iterator<Coin> it = result.iterator();
         assertEquals(it.next(),TEN);
@@ -77,7 +77,7 @@ public class BasicCoinLimitTest {
 
     @Test
     public void test50() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(50);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(50);
         assertEquals(result.size(),1);
         Iterator<Coin> it = result.iterator();
         assertEquals(it.next(),FIFTY);
@@ -85,10 +85,27 @@ public class BasicCoinLimitTest {
 
     @Test
     public void test100() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(100);
+        Collection<Coin> result = mainVendingMachine.getChangeFor(100);
         assertEquals(result.size(),1);
         Iterator<Coin> it = result.iterator();
         assertEquals(it.next(),HUNDRED);
+    }
+
+
+    @Test
+    public void test198() {
+        Collection<Coin> result = mainVendingMachine.getChangeFor(198);
+        assertEquals(result.size(),9);
+        Iterator<Coin> it = result.iterator();
+        assertEquals(it.next(),HUNDRED);
+        assertEquals(it.next(),FIFTY);
+        assertEquals(it.next(),TEN);
+        assertEquals(it.next(),TEN);
+        assertEquals(it.next(),TEN);
+        assertEquals(it.next(),TEN);
+        assertEquals(it.next(),FIVE);
+        assertEquals(it.next(),TWO);
+        assertEquals(it.next(),ONE);
     }
 }
 
