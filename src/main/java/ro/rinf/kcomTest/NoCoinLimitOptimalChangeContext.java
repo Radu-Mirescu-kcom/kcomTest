@@ -7,25 +7,25 @@ import java.util.Iterator;
 import java.util.List;
 
 public class NoCoinLimitOptimalChangeContext implements OptimalChangeContext {
-    private int amount;
-    private List<Coin> toReturn = new ArrayList<>();
-    Iterator<Coin> it = Arrays.asList(Coin.values()).iterator();
-    Coin coin;
+    protected int amount;
+    protected List<Coin> toReturn = new ArrayList<>();
+    private Iterator<Coin> it = Arrays.asList(Coin.values()).iterator();
+    protected Coin coin;
 
     public NoCoinLimitOptimalChangeContext(int amount) {
         this.amount = amount;
     }
 
-    private boolean needsCoin() {
+    protected boolean needsCoin() {
         return amount > 0;
     }
 
-    private void addCoin(Coin coin) {
+    protected void addCoin(Coin coin) {
         toReturn.add(coin);
         amount -= coin.getDenomination();
     }
 
-    private void getNextCoin() {
+    protected void getNextCoin() {
         coin = it.next();
     }
 
