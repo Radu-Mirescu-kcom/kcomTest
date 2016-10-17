@@ -1,10 +1,11 @@
 package ro.rinf.kcomTest;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeContext {
     private InventoryIterator inventoryIterator;
-    private SameCoinSet currentCoinSet;
+    private Optional<Coin> optionalCoin;
 
     public WithCoinLimitOptimalChangeContext(Inventory inventory, int amount) {
         super(amount);
@@ -13,7 +14,7 @@ public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeC
 
     @Override
     protected void getNextCoin() {
-        coin = inventoryIterator.next();
+        optionalCoin = inventoryIterator.next();
     }
 
     @Override
@@ -26,17 +27,17 @@ public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeC
     public Collection<Coin> getChangeFor() {
         getNextCoin();
         while(needsCoin()) {
-            if( coin.fitsIn(amount) ) {
-                addCoin(coin);
+            if( optionalCoin.get().fitsIn(amount) ) {
+                addCoin(optionalCoin.get());
             } else {
                 getNextCoin();
-                while( coin == null ) {
+                while( !optionalCoin.isPresent() ) {
                     if( toReturn.isEmpty() ) {
                         throw new InsufficientCoinageException();
                     }
                     Coin lastCoin = toReturn.remove(toReturn.size()-1);
                     amount += lastCoin.getDenomination();
-                    coin = inventoryIterator.resetToNext(lastCoin);
+                    optionalCoin = inventoryIterator.resetToNext(lastCoin);
                 }
             }
         }

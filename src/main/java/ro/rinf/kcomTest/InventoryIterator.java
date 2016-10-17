@@ -2,8 +2,9 @@ package ro.rinf.kcomTest;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
-public class InventoryIterator implements Iterator<Coin> {
+public class InventoryIterator implements Iterator<Optional<Coin>> {
     int idx;
     int sz;
     private final List<SameCoinSet> coinSets;
@@ -20,29 +21,29 @@ public class InventoryIterator implements Iterator<Coin> {
     }
 
     @Override
-    public Coin next() {
+    public Optional<Coin> next() {
         while(true) {
             idx++;
             if( idx == sz ) break;
             if( !coinSets.get(idx).isEmpty() ) {
-                return coinSets.get(idx).getCoin();
+                return Optional.of(coinSets.get(idx).getCoin());
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    public Coin resetToNext(Coin lastCoin) {
+    public Optional<Coin> resetToNext(Coin lastCoin) {
         for(int i=0;i<coinSets.size();i++) {
             if( coinSets.get(i).getCoin() == lastCoin ) {
                 coinSets.set(i,coinSets.get(i).increment());
                 idx = i+1;
                 if( idx == coinSets.size() ) {
-                    return null;
+                    return Optional.empty();
                 }
-                return coinSets.get(idx).getCoin();
+                return Optional.of(coinSets.get(idx).getCoin());
             }
         }
-        throw new InsufficientCoinageException();
+        return Optional.empty();
     }
 
     public void takeOne() {
