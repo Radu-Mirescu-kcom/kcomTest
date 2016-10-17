@@ -3,7 +3,6 @@ package ro.rinf.kcomTest;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -32,6 +31,10 @@ public class Inventory {
         denomination2coinMap.put("1",ONE);
     }
 
+    public List<SameCoinSet> getCoinSets() {
+        return coinSets;
+    }
+
     public Inventory(Properties properties) {
         this();
         Enumeration pNames = properties.propertyNames();
@@ -46,7 +49,12 @@ public class Inventory {
         });
     }
 
-    public Iterator<SameCoinSet> iterator() {
-        return coinSets.iterator();
+    public void pushBack(Coin coin) {
+        for(int i=0;i<coinSets.size();i++) {
+            if( coinSets.get(i).getCoin() == coin ) {
+                coinSets.set(i, coinSets.get(i).increment() );
+                break;
+            }
+        }
     }
 }

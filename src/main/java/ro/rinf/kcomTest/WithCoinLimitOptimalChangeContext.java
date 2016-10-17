@@ -1,54 +1,45 @@
 package ro.rinf.kcomTest;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeContext {
-    private Inventory inventory;
-    private Iterator<SameCoinSet> coinsSetsIterator;
+    private InventoryIterator inventoryIterator;
     private SameCoinSet currentCoinSet;
 
-    public WithCoinLimitOptimalChangeContext(Inventory wcs, int amount) {
+    public WithCoinLimitOptimalChangeContext(Inventory inventory, int amount) {
         super(amount);
-        inventory = wcs;
-    }
-
-    @Override
-    protected void initIterator() {
-        coinsSetsIterator = inventory.iterator();
+        inventoryIterator = new InventoryIterator(inventory);
     }
 
     @Override
     protected void getNextCoin() {
-        if( coinsSetsIterator.hasNext() ) {
-            currentCoinSet = coinsSetsIterator.next();
-            if( currentCoinSet.isEmpty() ) {
-                getNextCoin();
-            } else {
-                coin = currentCoinSet.getCoin();
-            }
-        } else {
-            throw new InsufficientCoinageException();
-        }
+        coin = inventoryIterator.next();
     }
 
     @Override
     protected void addCoin(Coin coin) {
         super.addCoin(coin);
+        inventoryIterator.takeOne();
     }
 
     @Override
     public Collection<Coin> getChangeFor() {
-        initIterator();
         getNextCoin();
         while(needsCoin()) {
             if( coin.fitsIn(amount) ) {
                 addCoin(coin);
             } else {
                 getNextCoin();
+                if( coin == null ) {
+                    if( toReturn.isEmpty() ) {
+                        throw new InsufficientCoinageException();
+                    }
+                    Coin lastCoin = toReturn.remove(toReturn.size()-1);
+                    amount += lastCoin.getDenomination();
+                    coin = inventoryIterator.resetToNext(lastCoin);
+                }
             }
         }
         return toReturn;
     }
-
 }

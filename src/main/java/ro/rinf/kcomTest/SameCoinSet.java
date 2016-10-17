@@ -16,4 +16,12 @@ public class SameCoinSet {
     public Coin getCoin() {
         return coin;
     }
+
+    public SameCoinSet increment() {
+        return new SameCoinSet(coin,amount+1);
+    }
+
+    public SameCoinSet decrement() {
+        return new SameCoinSet(coin,amount-1);
+    }
 }

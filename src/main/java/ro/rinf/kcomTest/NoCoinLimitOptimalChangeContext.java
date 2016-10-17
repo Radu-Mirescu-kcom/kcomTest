@@ -12,7 +12,7 @@ public class NoCoinLimitOptimalChangeContext implements ChangeContext {
     private Iterator<Coin> it;
     protected Coin coin;
 
-    protected void initIterator() {
+    private void initIterator() {
         it = Arrays.asList(Coin.values()).iterator();
     }
 
