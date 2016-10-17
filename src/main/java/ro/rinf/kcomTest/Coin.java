@@ -1,7 +1,7 @@
 package ro.rinf.kcomTest;
 
 public enum Coin {
-	ONE(1), TWO(2), FIVE(5), TEN(10), TWENTY(20), FIFTY(50), HUNDRED(100);
+	HUNDRED(100), FIFTY(50), TWENTY(20), TEN(10), FIVE(5), TWO(2), ONE(1);
 
 	private final int denomination;
 
