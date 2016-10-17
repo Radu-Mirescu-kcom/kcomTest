@@ -20,10 +20,9 @@ import static ro.rinf.kcomTest.Coin.TWO;
 public class Inventory {
     private final List<SameCoinSet> coinSets;
 
-    private final Map<String,Coin> denomination2coinMap = new HashMap<>();
+    private final static Map<String,Coin> denomination2coinMap = new HashMap<>();
 
-    public Inventory() {
-        coinSets = new ArrayList<>();
+    static {
         denomination2coinMap.put("100",HUNDRED);
         denomination2coinMap.put("50",FIFTY);
         denomination2coinMap.put("20",TWENTY);
@@ -33,6 +32,10 @@ public class Inventory {
         denomination2coinMap.put("5",FIVE);
         denomination2coinMap.put("2",TWO);
         denomination2coinMap.put("1",ONE);
+    }
+
+    public Inventory() {
+        coinSets = new ArrayList<>();
     }
 
     public List<SameCoinSet> getCoinSets() {
@@ -61,5 +64,11 @@ public class Inventory {
         }
 
         return stringBuilder.toString();
+    }
+
+    public Inventory clone() {
+        Inventory toReturn = new Inventory();
+        toReturn.getCoinSets().addAll(coinSets);
+        return toReturn;
     }
 }

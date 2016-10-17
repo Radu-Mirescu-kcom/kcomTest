@@ -46,7 +46,11 @@ public class InventoryIterator implements Iterator<Optional<Coin>> {
         return Optional.empty();
     }
 
-    public void takeOne() {
-        coinSets.set(idx,coinSets.get(idx).decrement());
+    public boolean takeOne() {
+        if( coinSets.get(idx).getAmount() > 0 ) {
+            coinSets.set(idx,coinSets.get(idx).decrement());
+            return true;
+        }
+        return false;
     }
 }
