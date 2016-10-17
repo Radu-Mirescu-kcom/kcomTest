@@ -9,23 +9,23 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static ro.rinf.kcomTest.Coin.EIGHT;
+//import static ro.rinf.kcomTest.Coin.EIGHT;
 import static ro.rinf.kcomTest.Coin.FIVE;
-import static ro.rinf.kcomTest.Coin.NINE;
-import static ro.rinf.kcomTest.Coin.TEN;
+//import static ro.rinf.kcomTest.Coin.NINE;
+//import static ro.rinf.kcomTest.Coin.TEN;
 import static ro.rinf.kcomTest.Coin.TWO;
 
 public class CornerCasesTest {
     private VendingMachine mainVendingMachine;
     private VendingMachine mainVendingMachine2;
-    private VendingMachine mainVendingMachine3;
+    //private VendingMachine mainVendingMachine3;
 
     @Before
     public void setup() {
-        Properties properties03 = new Properties();
-        properties03.put("10","10");
-        properties03.put("9","10");
-        properties03.put("8","10");
+        //Properties properties03 = new Properties();
+        //properties03.put("10","10");
+        //properties03.put("9","10");
+        //properties03.put("8","10");
         Properties properties02 = new Properties();
         properties02.put("100","1");
         Properties properties01 = new Properties();
@@ -39,9 +39,9 @@ public class CornerCasesTest {
         Inventory inventory2 = new Inventory(properties02);
         mainVendingMachine2 = new VendingMachine();
         mainVendingMachine2.setInventory(inventory2);
-        Inventory inventory3 = new Inventory(properties03);
-        mainVendingMachine3 = new VendingMachine();
-        mainVendingMachine3.setInventory(inventory3);
+        //Inventory inventory3 = new Inventory(properties03);
+        //mainVendingMachine3 = new VendingMachine();
+        //mainVendingMachine3.setInventory(inventory3);
     }
 
     @Test
@@ -65,6 +65,7 @@ public class CornerCasesTest {
         }
     }
 
+    /*
     @Test
     public void test51() {
         Collection<Coin> result = mainVendingMachine3.getChangeFor(51);
@@ -76,5 +77,5 @@ public class CornerCasesTest {
         assertEquals(EIGHT, it.next());
         assertEquals(EIGHT, it.next());
         assertEquals(EIGHT, it.next());
-    }
+    }*/
 }

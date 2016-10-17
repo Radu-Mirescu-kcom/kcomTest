@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import static ro.rinf.kcomTest.Coin.EIGHT;
+//import static ro.rinf.kcomTest.Coin.EIGHT;
 import static ro.rinf.kcomTest.Coin.FIFTY;
 import static ro.rinf.kcomTest.Coin.FIVE;
 import static ro.rinf.kcomTest.Coin.HUNDRED;
-import static ro.rinf.kcomTest.Coin.NINE;
+//import static ro.rinf.kcomTest.Coin.NINE;
 import static ro.rinf.kcomTest.Coin.ONE;
 import static ro.rinf.kcomTest.Coin.TEN;
 import static ro.rinf.kcomTest.Coin.TWENTY;
@@ -28,8 +28,8 @@ public class Inventory {
         denomination2coinMap.put("50",FIFTY);
         denomination2coinMap.put("20",TWENTY);
         denomination2coinMap.put("10",TEN);
-        denomination2coinMap.put("9",NINE);
-        denomination2coinMap.put("8",EIGHT);
+        //denomination2coinMap.put("9",NINE);
+        //denomination2coinMap.put("8",EIGHT);
         denomination2coinMap.put("5",FIVE);
         denomination2coinMap.put("2",TWO);
         denomination2coinMap.put("1",ONE);
