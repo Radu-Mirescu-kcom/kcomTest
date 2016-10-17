@@ -56,22 +56,6 @@ public class VendingMachine {
         return inventory;
     }
 
-    private boolean treatCoin(Optional<Coin> inventoryCoin, Coin coin, InventoryIterator inventoryIterator) {
-
-        if( inventoryCoin.isPresent() ) {
-            if( inventoryCoin.get() == coin) {
-                if( !inventoryIterator.takeOne() ) {
-                    return false;
-                }
-            } else {
-                inventoryIterator.next();
-            }
-            return true;
-        } else {
-            throw new UnexpectedException("Unexpected empty inventory!");
-        }
-    }
-
     public synchronized boolean save(Collection<Coin> coins) {
         Inventory newInventory = new Inventory(inventory);
         InventoryIterator inventoryIterator = new InventoryIterator(newInventory);
