@@ -1,5 +1,6 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,10 +11,9 @@ import java.util.Properties;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 //import static ro.rinf.kcomTest.Coin.EIGHT;
-import static ro.rinf.kcomTest.Coin.FIVE;
 //import static ro.rinf.kcomTest.Coin.NINE;
 //import static ro.rinf.kcomTest.Coin.TEN;
-import static ro.rinf.kcomTest.Coin.TWO;
+
 
 public class CornerCasesTest {
     private VendingMachine mainVendingMachine;
@@ -45,10 +45,10 @@ public class CornerCasesTest {
         Collection<Coin> result = mainVendingMachine.getChangeFor(11);
         assertEquals(result.size(),4);
         Iterator<Coin> it = result.iterator();
-        assertEquals(FIVE, it.next());
-        assertEquals(TWO, it.next());
-        assertEquals(TWO, it.next());
-        assertEquals(TWO, it.next());
+        Assert.assertEquals(Coin.FIVE, it.next());
+        Assert.assertEquals(Coin.TWO, it.next());
+        Assert.assertEquals(Coin.TWO, it.next());
+        Assert.assertEquals(Coin.TWO, it.next());
     }
 
     @Test

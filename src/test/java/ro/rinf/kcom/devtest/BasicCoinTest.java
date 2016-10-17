@@ -1,4 +1,4 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
 import org.junit.Before;
 import org.junit.Test;

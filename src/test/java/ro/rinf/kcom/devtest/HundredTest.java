@@ -1,4 +1,4 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,12 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-import static ro.rinf.kcomTest.Coin.FIFTY;
-import static ro.rinf.kcomTest.Coin.FIVE;
-import static ro.rinf.kcomTest.Coin.ONE;
-import static ro.rinf.kcomTest.Coin.TEN;
-import static ro.rinf.kcomTest.Coin.TWENTY;
-import static ro.rinf.kcomTest.Coin.TWO;
 
 public class HundredTest {
     private VendingMachine vendingMachine;
@@ -27,28 +21,28 @@ public class HundredTest {
 
     Coin[][] ones = {
         {},
-        {ONE},
-        {TWO},
-        {TWO,ONE},
-        {TWO,TWO},
-        {FIVE},
-        {FIVE,ONE},
-        {FIVE,TWO},
-        {FIVE,TWO,ONE},
-        {FIVE,TWO,TWO}
+        {Coin.ONE},
+        {Coin.TWO},
+        {Coin.TWO, Coin.ONE},
+        {Coin.TWO, Coin.TWO},
+        {Coin.FIVE},
+        {Coin.FIVE, Coin.ONE},
+        {Coin.FIVE, Coin.TWO},
+        {Coin.FIVE, Coin.TWO, Coin.ONE},
+        {Coin.FIVE, Coin.TWO, Coin.TWO}
     };
 
     Coin [][] dozens = {
         {},
-        {TEN},
-        {TWENTY},
-        {TWENTY,TEN},
-        {TWENTY,TWENTY},
-        {FIFTY},
-        {FIFTY,TEN},
-        {FIFTY,TWENTY},
-        {FIFTY,TWENTY,TEN},
-        {FIFTY,TWENTY,TWENTY}
+        {Coin.TEN},
+        {Coin.TWENTY},
+        {Coin.TWENTY, Coin.TEN},
+        {Coin.TWENTY, Coin.TWENTY},
+        {Coin.FIFTY},
+        {Coin.FIFTY, Coin.TEN},
+        {Coin.FIFTY, Coin.TWENTY},
+        {Coin.FIFTY, Coin.TWENTY, Coin.TEN},
+        {Coin.FIFTY, Coin.TWENTY, Coin.TWENTY}
     };
 
     private boolean collectionsAreEquals(Iterator<Coin> it1,Iterator<Coin> it2) {

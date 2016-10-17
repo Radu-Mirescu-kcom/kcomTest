@@ -1,25 +1,24 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
-import static ro.rinf.kcomTest.Coin.FIFTY;
-import static ro.rinf.kcomTest.Coin.FIVE;
-import static ro.rinf.kcomTest.Coin.HUNDRED;
-import static ro.rinf.kcomTest.Coin.ONE;
-import static ro.rinf.kcomTest.Coin.TEN;
-import static ro.rinf.kcomTest.Coin.TWO;
 
 public class BasicCoinLimitTest {
     private VendingMachine mainVendingMachine;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception {
         Properties mainProperties = new Properties();
         mainProperties.put("100","11");
         mainProperties.put("50","24");
@@ -28,7 +27,16 @@ public class BasicCoinLimitTest {
         mainProperties.put("5","200");
         mainProperties.put("2","11");
         mainProperties.put("1","23");
+        initializeThePropertiesFile();
         mainVendingMachine = new VendingMachine(mainProperties,"");
+    }
+
+    private void initializeThePropertiesFile() throws Exception {
+        URL url = Thread.currentThread().getContextClassLoader().getResource("coin-inventory.properties");
+        File file = new File(url.toURI().getPath());
+        try( PrintStream printStream = new PrintStream(new FileOutputStream(file))){
+            printStream.print("100=11\n50=24\n20=0\n10=99\n5=200\n2=11\n1=23\n");
+        }
     }
 
     @Test
@@ -41,7 +49,7 @@ public class BasicCoinLimitTest {
     public void test01() {
         Collection<Coin> result = mainVendingMachine.getChangeFor(1);
         assertEquals(result.size(),1);
-        assertEquals(result.iterator().next(),ONE);
+        Assert.assertEquals(result.iterator().next(), Coin.ONE);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=11\n50=24\n20=0\n10=99\n5=200\n2=11\n1=22\n");
     }
 
@@ -49,7 +57,7 @@ public class BasicCoinLimitTest {
     public void test02() {
         Collection<Coin> result = mainVendingMachine.getChangeFor(2);
         assertEquals(result.size(),1);
-        assertEquals(result.iterator().next(),TWO);
+        Assert.assertEquals(result.iterator().next(), Coin.TWO);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=11\n50=24\n20=0\n10=99\n5=200\n2=10\n1=23\n");
     }
 
@@ -57,7 +65,7 @@ public class BasicCoinLimitTest {
     public void test05() {
         Collection<Coin> result = mainVendingMachine.getChangeFor(5);
         assertEquals(result.size(),1);
-        assertEquals(result.iterator().next(),FIVE);
+        Assert.assertEquals(result.iterator().next(), Coin.FIVE);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=11\n50=24\n20=0\n10=99\n5=199\n2=11\n1=23\n");
     }
 
@@ -65,7 +73,7 @@ public class BasicCoinLimitTest {
     public void test10() {
         Collection<Coin> result = mainVendingMachine.getChangeFor(10);
         assertEquals(result.size(),1);
-        assertEquals(result.iterator().next(),TEN);
+        Assert.assertEquals(result.iterator().next(), Coin.TEN);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=11\n50=24\n20=0\n10=98\n5=200\n2=11\n1=23\n");
     }
 
@@ -74,8 +82,8 @@ public class BasicCoinLimitTest {
         Collection<Coin> result = mainVendingMachine.getChangeFor(20);
         assertEquals(result.size(),2);
         Iterator<Coin> it = result.iterator();
-        assertEquals(it.next(),TEN);
-        assertEquals(it.next(),TEN);
+        Assert.assertEquals(it.next(), Coin.TEN);
+        Assert.assertEquals(it.next(), Coin.TEN);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=11\n50=24\n20=0\n10=97\n5=200\n2=11\n1=23\n");
     }
 
@@ -84,7 +92,7 @@ public class BasicCoinLimitTest {
         Collection<Coin> result = mainVendingMachine.getChangeFor(50);
         assertEquals(result.size(),1);
         Iterator<Coin> it = result.iterator();
-        assertEquals(it.next(),FIFTY);
+        Assert.assertEquals(it.next(), Coin.FIFTY);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=11\n50=23\n20=0\n10=99\n5=200\n2=11\n1=23\n");
     }
 
@@ -93,7 +101,7 @@ public class BasicCoinLimitTest {
         Collection<Coin> result = mainVendingMachine.getChangeFor(100);
         assertEquals(result.size(),1);
         Iterator<Coin> it = result.iterator();
-        assertEquals(it.next(),HUNDRED);
+        Assert.assertEquals(it.next(), Coin.HUNDRED);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=10\n50=24\n20=0\n10=99\n5=200\n2=11\n1=23\n");
     }
 
@@ -103,15 +111,15 @@ public class BasicCoinLimitTest {
         Collection<Coin> result = mainVendingMachine.getChangeFor(198);
         assertEquals(result.size(),9);
         Iterator<Coin> it = result.iterator();
-        assertEquals(it.next(),HUNDRED);
-        assertEquals(it.next(),FIFTY);
-        assertEquals(it.next(),TEN);
-        assertEquals(it.next(),TEN);
-        assertEquals(it.next(),TEN);
-        assertEquals(it.next(),TEN);
-        assertEquals(it.next(),FIVE);
-        assertEquals(it.next(),TWO);
-        assertEquals(it.next(),ONE);
+        Assert.assertEquals(it.next(), Coin.HUNDRED);
+        Assert.assertEquals(it.next(), Coin.FIFTY);
+        Assert.assertEquals(it.next(), Coin.TEN);
+        Assert.assertEquals(it.next(), Coin.TEN);
+        Assert.assertEquals(it.next(), Coin.TEN);
+        Assert.assertEquals(it.next(), Coin.TEN);
+        Assert.assertEquals(it.next(), Coin.FIVE);
+        Assert.assertEquals(it.next(), Coin.TWO);
+        Assert.assertEquals(it.next(), Coin.ONE);
         assertEquals(mainVendingMachine.getInventory().toString(),"100=10\n50=23\n20=0\n10=95\n5=199\n2=10\n1=22\n");
     }
 }

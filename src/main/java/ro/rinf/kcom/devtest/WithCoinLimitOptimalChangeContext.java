@@ -1,4 +1,4 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
 import java.util.Collection;
 import java.util.Optional;

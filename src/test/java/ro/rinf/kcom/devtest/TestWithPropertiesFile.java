@@ -1,5 +1,6 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +13,6 @@ import java.util.Collection;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
-import static ro.rinf.kcomTest.Coin.ONE;
 
 public class TestWithPropertiesFile {
     VendingMachine vendingMachine;
@@ -44,7 +44,7 @@ public class TestWithPropertiesFile {
     public void verifyUsingThePropertiesFile() throws Exception {
         Collection<Coin> result = vendingMachine.getChangeFor(1);
         assertEquals(result.size(),1);
-        assertEquals(result.iterator().next(),ONE);
+        Assert.assertEquals(result.iterator().next(), Coin.ONE);
         Properties props = propertiesFileContent();
         assertEquals("22",props.getProperty("1"));
     }

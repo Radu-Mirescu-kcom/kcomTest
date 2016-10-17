@@ -1,4 +1,4 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
 public class InsufficientCoinageException extends RuntimeException {
 

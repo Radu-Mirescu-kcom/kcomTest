@@ -1,4 +1,4 @@
-package ro.rinf.kcomTest;
+package ro.rinf.kcom.devtest;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +24,9 @@ public class InventoryIterator implements Iterator<Optional<Coin>> {
     public Optional<Coin> next() {
         while(true) {
             idx++;
-            if( idx == sz ) break;
+            if( idx == sz ) {
+                break;
+            }
             if( !coinSets.get(idx).isEmpty() ) {
                 return Optional.of(coinSets.get(idx).getCoin());
             }
@@ -52,5 +54,15 @@ public class InventoryIterator implements Iterator<Optional<Coin>> {
             return true;
         }
         return false;
+    }
+
+    public boolean takeOne(Coin coin) {
+        for(int i=0;i<coinSets.size();i++) {
+            if( coinSets.get(i).getCoin() == coin ) {
+                idx = i;
+                return takeOne();
+            }
+        }
+        throw new UnexpectedException("No coin in coin set!");
     }
 }
