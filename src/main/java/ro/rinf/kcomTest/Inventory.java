@@ -48,13 +48,4 @@ public class Inventory {
             return c2.getCoin().getDenomination() - c1.getCoin().getDenomination();
         });
     }
-
-    public void pushBack(Coin coin) {
-        for(int i=0;i<coinSets.size();i++) {
-            if( coinSets.get(i).getCoin() == coin ) {
-                coinSets.set(i, coinSets.get(i).increment() );
-                break;
-            }
-        }
-    }
 }

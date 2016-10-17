@@ -6,12 +6,12 @@ import java.util.List;
 public class InventoryIterator implements Iterator<Coin> {
     int idx;
     int sz;
-    private final Inventory inventory;
+    private final List<SameCoinSet> coinSets;
 
     public InventoryIterator(Inventory inventory) {
-        this.inventory = inventory;
+        this.coinSets = inventory.getCoinSets();
         idx = -1;
-        sz = inventory.getCoinSets().size();
+        sz = coinSets.size();
     }
 
     @Override
@@ -24,15 +24,14 @@ public class InventoryIterator implements Iterator<Coin> {
         while(true) {
             idx++;
             if( idx == sz ) break;
-            if( !inventory.getCoinSets().get(idx).isEmpty() ) {
-                return inventory.getCoinSets().get(idx).getCoin();
+            if( !coinSets.get(idx).isEmpty() ) {
+                return coinSets.get(idx).getCoin();
             }
         }
         return null;
     }
 
     public Coin resetToNext(Coin lastCoin) {
-        List<SameCoinSet> coinSets = inventory.getCoinSets();
         for(int i=0;i<coinSets.size();i++) {
             if( coinSets.get(i).getCoin() == lastCoin ) {
                 coinSets.set(i,coinSets.get(i).increment());
@@ -45,7 +44,6 @@ public class InventoryIterator implements Iterator<Coin> {
     }
 
     public void takeOne() {
-        List<SameCoinSet> coinSets = inventory.getCoinSets();
         coinSets.set(idx,coinSets.get(idx).decrement());
     }
 }
