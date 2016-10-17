@@ -12,4 +12,8 @@ public enum Coin {
 	public int getDenomination() {
 		return denomination;
 	}
+
+	public boolean fitsIn(int amount) {
+		return denomination <= amount;
+	}
 }
