@@ -1,0 +1,49 @@
+The main problem is to determine how to return the least number of coins possible.
+
+The main idea is to take the greatest coin that fits in the sum, then the greatest coin
+that fits in the remainder, and so on.
+
+It is this idea correct?!
+
+Suppose we have coinage of type 1, 5, 7, 10.
+
+Then for sum=12 we will have two solutions:
+
+10, 1, 1 - tree coins
+
+7, 5 - two coins
+
+So, for this particular case the above rule breaks: if we take the greatest first we arrive at a wrong
+
+solution.
+
+We need to check if the rule holds for the normal case with 1, 2, 5, 10, 20, 50, 100 coinage.
+
+In normal life an amount is composed by units, dozens and hundreds and more.
+
+Every possible unit could be expressed by an optimal combination of 1, 2, 5 (listed in descending order).
+
+Every possible dozen could be expressed by an optional combination of 10, 20, 50 (listed in descending order).
+
+Every possible hundred and more could be expressed as a number of 100 coinage.
+
+It seams that optimal amount of coins for a number = optimal amount for each segment.
+
+By example
+
+163 = 100 + (50, 10) + ( 2, 1).
+
+Since every segment has coins that are less than the coins in the above segment (the units are less than dozens,
+
+and dozens are less than hundred) it seams that the above rule of taking the greatest first holds.
+
+Caution
+-------
+
+When there is a limited amount of coins the rule above does not hold.
+
+For example expressing 11 having no 1 coins could fail with coinage shortage exception if the
+
+10 coin is taken and the remaining 1 could no more be filled, but could have a solution with a
+
+5 2 2 2 combination.
