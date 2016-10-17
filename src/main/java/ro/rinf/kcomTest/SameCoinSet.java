@@ -8,4 +8,12 @@ public class SameCoinSet {
         this.coin = coin;
         this.amount = amount;
     }
+
+    public boolean isEmpty() {
+        return amount == 0;
+    }
+
+    public Coin getCoin() {
+        return coin;
+    }
 }

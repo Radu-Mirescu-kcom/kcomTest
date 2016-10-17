@@ -9,8 +9,12 @@ import java.util.List;
 public class NoCoinLimitOptimalChangeContext implements OptimalChangeContext {
     protected int amount;
     protected List<Coin> toReturn = new ArrayList<>();
-    private Iterator<Coin> it = Arrays.asList(Coin.values()).iterator();
+    private Iterator<Coin> it;
     protected Coin coin;
+
+    protected void initIterator() {
+        it = Arrays.asList(Coin.values()).iterator();
+    }
 
     public NoCoinLimitOptimalChangeContext(int amount) {
         this.amount = amount;
@@ -31,6 +35,7 @@ public class NoCoinLimitOptimalChangeContext implements OptimalChangeContext {
 
     @Override
     public Collection<Coin> getOptimalChangeFor() {
+        initIterator();
         getNextCoin();
         while(needsCoin()) {
             if( coin.fitsIn(amount) ) {

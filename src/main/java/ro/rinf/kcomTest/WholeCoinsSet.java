@@ -3,6 +3,7 @@ package ro.rinf.kcomTest;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -40,5 +41,12 @@ public class WholeCoinsSet {
             Integer count = Integer.parseInt(properties.getProperty(pName));
             coinSets.add(new SameCoinSet(coin,count));
         }
+        coinSets.sort( (c1,c2) -> {
+            return c2.getCoin().getDenomination() - c1.getCoin().getDenomination();
+        });
+    }
+
+    public Iterator<SameCoinSet> iterator() {
+        return coinSets.iterator();
     }
 }

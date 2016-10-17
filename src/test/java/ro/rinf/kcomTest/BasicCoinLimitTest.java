@@ -47,28 +47,28 @@ public class BasicCoinLimitTest {
 
     @Test
     public void test02() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(2);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),TWO);
     }
 
     @Test
     public void test05() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(5);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),FIVE);
     }
 
     @Test
     public void test10() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(10);
         assertEquals(result.size(),1);
         assertEquals(result.iterator().next(),TEN);
     }
 
     @Test
     public void test20() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(20);
         assertEquals(result.size(),2);
         Iterator<Coin> it = result.iterator();
         assertEquals(it.next(),TEN);
@@ -77,7 +77,7 @@ public class BasicCoinLimitTest {
 
     @Test
     public void test50() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(50);
         assertEquals(result.size(),1);
         Iterator<Coin> it = result.iterator();
         assertEquals(it.next(),FIFTY);
@@ -85,7 +85,7 @@ public class BasicCoinLimitTest {
 
     @Test
     public void test100() {
-        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(1);
+        Collection<Coin> result = mainVendingMachine.getOptimalChangeFor(100);
         assertEquals(result.size(),1);
         Iterator<Coin> it = result.iterator();
         assertEquals(it.next(),HUNDRED);
