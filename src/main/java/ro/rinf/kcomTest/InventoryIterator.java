@@ -36,7 +36,9 @@ public class InventoryIterator implements Iterator<Coin> {
             if( coinSets.get(i).getCoin() == lastCoin ) {
                 coinSets.set(i,coinSets.get(i).increment());
                 idx = i+1;
-                if( idx == coinSets.size() ) throw new InsufficientCoinageException();
+                if( idx == coinSets.size() ) {
+                    return null;
+                }
                 return coinSets.get(idx).getCoin();
             }
         }

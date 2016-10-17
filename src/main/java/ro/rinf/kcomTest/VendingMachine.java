@@ -16,4 +16,8 @@ public class VendingMachine {
     public Collection<Coin> getChangeFor(int pence) {
         return new WithCoinLimitOptimalChangeContext(inventory,pence).getChangeFor();
     }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
 }

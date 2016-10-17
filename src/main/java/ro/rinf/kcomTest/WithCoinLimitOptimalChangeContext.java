@@ -30,7 +30,7 @@ public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeC
                 addCoin(coin);
             } else {
                 getNextCoin();
-                if( coin == null ) {
+                while( coin == null ) {
                     if( toReturn.isEmpty() ) {
                         throw new InsufficientCoinageException();
                     }

@@ -24,4 +24,8 @@ public class SameCoinSet {
     public SameCoinSet decrement() {
         return new SameCoinSet(coin,amount-1);
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
