@@ -28,9 +28,7 @@ public class BasicCoinLimitTest {
         mainProperties.put("5","200");
         mainProperties.put("2","11");
         mainProperties.put("1","23");
-        Inventory inventory = new Inventory(mainProperties);
-        mainVendingMachine = new VendingMachine();
-        mainVendingMachine.setInventory(inventory);
+        mainVendingMachine = new VendingMachine(mainProperties,"");
     }
 
     @Test

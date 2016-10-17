@@ -33,12 +33,8 @@ public class CornerCasesTest {
         properties01.put("5","2");
         properties01.put("2","10");
         properties01.put("1","0");
-        Inventory inventory = new Inventory(properties01);
-        mainVendingMachine = new VendingMachine();
-        mainVendingMachine.setInventory(inventory);
-        Inventory inventory2 = new Inventory(properties02);
-        mainVendingMachine2 = new VendingMachine();
-        mainVendingMachine2.setInventory(inventory2);
+        mainVendingMachine = new VendingMachine(properties01,"");
+        mainVendingMachine2 = new VendingMachine(properties02,"");
         //Inventory inventory3 = new Inventory(properties03);
         //mainVendingMachine3 = new VendingMachine();
         //mainVendingMachine3.setInventory(inventory3);
