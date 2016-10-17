@@ -4,7 +4,11 @@ import java.util.Collection;
 import java.util.function.Function;
 
 public class VendingMachine {
-	private Function<Integer,OptimalChangeContext> factoryMethod = NoCoinLimitOptimalChangeContext::new;
+	private final Function<Integer,OptimalChangeContext> factoryMethod;
+
+    public VendingMachine() {
+        factoryMethod = NoCoinLimitOptimalChangeContext::new;
+    }
 
     public VendingMachine(Function<Integer,OptimalChangeContext> factoryMethod) {
         this.factoryMethod = factoryMethod;
