@@ -25,14 +25,20 @@ public class VendingMachine {
 	}
 
     public Collection<Coin> getChangeFor(int pence) {
-        return new WithCoinLimitOptimalChangeContext(inventory,pence).getChangeFor();
+        try {
+            Collection<Coin> toReturn = new WithCoinLimitOptimalChangeContext(inventory,pence).getChangeFor();
+            save(inventory);
+            return toReturn;
+        } catch(Exception ex) {
+            throw new RuntimeException("Unexpected exception: " + ex.getMessage());
+        }
     }
 
     public Inventory getInventory() {
         return inventory;
     }
 
-    public void save(Inventory inventory) throws URISyntaxException, FileNotFoundException {
+    public synchronized void save(Inventory inventory) throws URISyntaxException, FileNotFoundException {
         URL url = Thread.currentThread().getContextClassLoader().getResource(propertiesPath);
         File file = new File(url.toURI().getPath());
         try( PrintStream printStream = new PrintStream(new FileOutputStream(file))){

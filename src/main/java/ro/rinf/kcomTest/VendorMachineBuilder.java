@@ -14,7 +14,7 @@ public class VendorMachineBuilder {
     public VendingMachine build() throws Exception {
         final Properties properties = new Properties();
         try (final InputStream stream =
-                 this.getClass().getResourceAsStream(resourceFile)) {
+                 this.getClass().getClassLoader().getResourceAsStream(resourceFile)) {
             properties.load(stream);
             return new VendingMachine(properties,resourceFile);
         }
