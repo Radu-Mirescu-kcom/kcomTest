@@ -30,7 +30,9 @@ public class NoCoinLimitOptimalChangeContext implements ChangeContext {
     }
 
     protected void getNextCoin() {
-        coin = it.next();
+        do {
+            coin = it.next();
+        } while(!coin.isStandard());
     }
 
     @Override

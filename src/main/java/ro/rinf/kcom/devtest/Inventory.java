@@ -17,6 +17,8 @@ public class Inventory {
         denomination2coinMap.put("50", Coin.FIFTY);
         denomination2coinMap.put("20", Coin.TWENTY);
         denomination2coinMap.put("10", Coin.TEN);
+        denomination2coinMap.put("9", Coin.NINE);
+        denomination2coinMap.put("8", Coin.EIGHT);
         denomination2coinMap.put("5", Coin.FIVE);
         denomination2coinMap.put("2", Coin.TWO);
         denomination2coinMap.put("1", Coin.ONE);
