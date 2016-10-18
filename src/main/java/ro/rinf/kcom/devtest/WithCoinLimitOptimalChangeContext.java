@@ -31,25 +31,34 @@ public class WithCoinLimitOptimalChangeContext extends NoCoinLimitOptimalChangeC
         return candidates.stream().map( c -> c.size()).reduce(Integer::min).orElse(Integer.MAX_VALUE);
     }
 
-    private boolean tryOtherPath() {
-        if( toReturn.isEmpty() ) {
-            return false;
-        }
-        lastCoin = toReturn.remove(toReturn.size()-1);
-        amount += lastCoin.getDenomination();
-        optionalCoin = inventoryIterator.resetToNext(lastCoin);
-        if( !optionalCoin.isPresent() ) {
-            return false;
-        }
-        if( !candidates.isEmpty()) {
-            int bestExpectedSize = toReturn.size() + amount/optionalCoin.get().getDenomination();
-            if( amount % amount/optionalCoin.get().getDenomination() > 0 ) {
-                bestExpectedSize++;
-            }
-            return bestExpectedSize <= bestTrialSoFar();
-        } else {
+    private boolean itIsAPromisingCandidate() {
+        if( candidates.isEmpty() ) {
             return true;
         }
+        int bestExpectedSize = toReturn.size() + amount/optionalCoin.get().getDenomination();
+        if( ( amount % optionalCoin.get().getDenomination() ) > 0 ) {
+            bestExpectedSize++;
+        }
+        return bestExpectedSize < bestTrialSoFar();
+    }
+
+    private boolean tryOtherPath() {
+        do {
+            if( toReturn.isEmpty() ) {
+                return false;
+            }
+            while(!toReturn.isEmpty()) {
+                lastCoin = toReturn.remove(toReturn.size()-1);
+                amount += lastCoin.getDenomination();
+                optionalCoin = inventoryIterator.resetToNext(lastCoin);
+                if( optionalCoin.isPresent() ) break;
+            }
+            if( !optionalCoin.isPresent() ) {
+                return false;
+            }
+        } while(!itIsAPromisingCandidate());
+
+        return true;
     }
 
     public Collection<Coin> bestCandidate() {
