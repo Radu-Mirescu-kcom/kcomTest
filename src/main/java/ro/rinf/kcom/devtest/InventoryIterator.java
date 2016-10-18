@@ -38,11 +38,16 @@ public class InventoryIterator implements Iterator<Optional<Coin>> {
         for(int i=0;i<coinSets.size();i++) {
             if( coinSets.get(i).getCoin() == lastCoin ) {
                 coinSets.set(i,coinSets.get(i).increment());
-                idx = i+1;
-                if( idx == coinSets.size() ) {
-                    return Optional.empty();
+                idx = i;
+                while(true) {
+                    idx++;
+                    if( idx == coinSets.size() ) {
+                        return Optional.empty();
+                    }
+                    if( !coinSets.get(idx).isEmpty() ) {
+                        return Optional.of(coinSets.get(idx).getCoin());
+                    }
                 }
-                return Optional.of(coinSets.get(idx).getCoin());
             }
         }
         return Optional.empty();
