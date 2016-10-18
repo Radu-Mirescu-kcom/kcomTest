@@ -61,11 +61,8 @@ public class VendingMachine {
         Inventory newInventory = new Inventory(inventory);
         InventoryIterator inventoryIterator = new InventoryIterator(newInventory);
         for( Coin coin:coins) {
-            while(true) {
-                if( inventoryIterator.takeOne(coin) ) {
-                    break;
-                }
-                throw new UnexpectedException("No coin!");
+            if( !inventoryIterator.takeOne(coin) ) {
+                return false;
             }
         }
 
