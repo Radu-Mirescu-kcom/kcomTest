@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
@@ -76,11 +77,10 @@ public class VendingMachine {
 
         URL url = currentThread().getContextClassLoader().getResource(propertiesPath);
         try {
-            File file = new File(url.toURI().getPath());
-            try( PrintStream printStream = new PrintStream(new FileOutputStream(file))){
+            try( PrintStream printStream = new PrintStream(new File(url.toURI().getPath()),"UTF-8")){
                 printStream.print(inventory.toString());
             }
-        } catch( FileNotFoundException | URISyntaxException ex ) {
+        } catch( FileNotFoundException | URISyntaxException | UnsupportedEncodingException ex ) {
             throw new UnexpectedException("Save error : " + ex);
         }
         return true;

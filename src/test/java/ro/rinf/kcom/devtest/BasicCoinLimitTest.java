@@ -5,8 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Iterator;
@@ -31,11 +34,12 @@ public class BasicCoinLimitTest {
         mainVendingMachine = new VendingMachine(mainProperties,"");
     }
 
-    private void initializeThePropertiesFile() throws Exception {
+    private void initializeThePropertiesFile() {
         URL url = Thread.currentThread().getContextClassLoader().getResource("coin-inventory.properties");
-        File file = new File(url.toURI().getPath());
-        try( PrintStream printStream = new PrintStream(new FileOutputStream(file))){
+        try( PrintStream printStream = new PrintStream(new File(url.toURI().getPath()),"UTF-8") ){
             printStream.print("100=11\n50=24\n20=0\n10=99\n5=200\n2=11\n1=23\n");
+        } catch( FileNotFoundException | UnsupportedEncodingException | URISyntaxException ex ) {
+            throw new UnexpectedException("Error at initializing properties: " + ex.getMessage());
         }
     }
 

@@ -52,7 +52,7 @@ public class Inventory {
         StringBuilder stringBuilder = new StringBuilder();
 
         for(SameCoinSet coinSet:coinSets) {
-            stringBuilder.append(String.format("%d=%d\n",
+            stringBuilder.append(String.format("%d=%d%n",
                 coinSet.getCoin().getDenomination(),coinSet.getAmount())
             );
         }
