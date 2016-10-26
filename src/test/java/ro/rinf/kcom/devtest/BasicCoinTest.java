@@ -9,11 +9,11 @@ import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
 
 public class BasicCoinTest {
-	private VendingMachine vendingMachine;
+	private VendingMachineNG vendingMachine;
 
 	@Before
 	public void setup() {
-		vendingMachine = new VendingMachine();
+		vendingMachine = new VendingMachineNG(true);
 	}
 
 	@Test

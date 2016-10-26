@@ -12,11 +12,11 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 public class HundredTest {
-    private VendingMachine vendingMachine;
+    private VendingMachineNG vendingMachine;
 
     @Before
     public void setup() {
-        vendingMachine = new VendingMachine();
+        vendingMachine = new VendingMachineNG(true);
     }
 
     Coin[][] ones = {

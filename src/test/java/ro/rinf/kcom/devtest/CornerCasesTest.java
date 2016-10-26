@@ -19,10 +19,10 @@ import static ro.rinf.kcom.devtest.Coin.TEN;
 
 
 public class CornerCasesTest {
-    private VendingMachine mainVendingMachine;
-    private VendingMachine mainVendingMachine2;
-    private VendingMachine mainVendingMachine3;
-    private VendingMachine vendingMachine17;
+    private VendingMachineNG mainVendingMachine;
+    private VendingMachineNG mainVendingMachine2;
+    private VendingMachineNG mainVendingMachine3;
+    private VendingMachineNG vendingMachine17;
 
     @Before
     public void setup() {
@@ -43,10 +43,10 @@ public class CornerCasesTest {
         properties17.put("8","1");
         properties17.put("5","1");
         properties17.put("2","1");
-        mainVendingMachine = new VendingMachine(properties01,"");
-        mainVendingMachine2 = new VendingMachine(properties02,"");
-        mainVendingMachine3 = new VendingMachine(properties03,"");
-        vendingMachine17 = new VendingMachine(properties17,"");
+        mainVendingMachine = new VendingMachineNG(properties01);
+        mainVendingMachine2 = new VendingMachineNG(properties02);
+        mainVendingMachine3 = new VendingMachineNG(properties03);
+        vendingMachine17 = new VendingMachineNG(properties17);
     }
 
     @Test

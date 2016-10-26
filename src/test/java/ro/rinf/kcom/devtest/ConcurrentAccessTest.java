@@ -1,28 +1,22 @@
 package ro.rinf.kcom.devtest;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Optional;
-import java.util.Properties;
 
-import static org.junit.Assert.assertEquals;
-
-public class TestWithPropertiesFile {
+public class ConcurrentAccessTest {
     VendingMachineNG vendingMachine;
+    int THREAD_NB = 10000;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
         initializeThePropertiesFile();
         PropertyRepository repo = new PropertyRepository();
         vendingMachine = new VendingMachineNG(repo.get());
@@ -32,28 +26,20 @@ public class TestWithPropertiesFile {
     private void initializeThePropertiesFile() {
         URL url = Thread.currentThread().getContextClassLoader().getResource("coin-inventory.properties");
         try( PrintStream printStream = new PrintStream(new File(url.toURI().getPath()),"UTF-8") ){
-            printStream.print("100=11\n50=24\n20=0\n10=99\n5=200\n2=11\n1=23\n");
+            printStream.print(String.format("100=%d\n50=%d\n20=%d\n10=%d\n5=%d\n2=%d\n1=%d\n",
+                THREAD_NB,THREAD_NB,THREAD_NB,THREAD_NB,THREAD_NB,THREAD_NB,THREAD_NB)
+            );
         } catch( URISyntaxException | FileNotFoundException | UnsupportedEncodingException ex ) {
             throw new UnexpectedException("Test initialize properties file error: " + ex.getMessage());
         }
     }
 
-    public Properties propertiesFileContent() throws Exception {
-        Properties properties = new Properties();
-        try (final InputStream stream =
-                 this.getClass().getClassLoader().getResourceAsStream("coin-inventory.properties")) {
-            properties.load(stream);
-            return properties;
-        }
-    }
-
     @Test
-    public void verifyUsingThePropertiesFile() throws Exception {
-        setup();
-        Collection<Coin> result = vendingMachine.getChangeFor(1);
-        assertEquals(result.size(),1);
-        Assert.assertEquals(result.iterator().next(), Coin.ONE);
-        Properties props = propertiesFileContent();
-        assertEquals("22",props.getProperty("1"));
+    public void testConcurrentAccess() {
+        for(int i=0;i<THREAD_NB;i++) {
+            new Thread( () -> {
+               vendingMachine.getChangeFor(188);
+            }).start();
+        }
     }
 }
