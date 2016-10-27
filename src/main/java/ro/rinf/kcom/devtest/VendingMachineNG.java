@@ -47,6 +47,7 @@ public class VendingMachineNG {
         boolean takeTheSameCoin = true;
         boolean mustTryFallbackAgain = false;
         long version = versionCounter.get();
+        int forbiddenQuantity = Integer.MAX_VALUE;
 
         private ChangeContext(int amount, TreeMap<Coin, Integer> inventory) {
             this.amount = amount;
@@ -66,7 +67,7 @@ public class VendingMachineNG {
                     } else if (noCoin()) {
                         fallBack();
                     } else {
-                        addCoinToChange();
+                        tryToAddCoinToChange();
                     }
                 }
                 if (searchForOptimal) {
@@ -124,6 +125,7 @@ public class VendingMachineNG {
         private Coin doFallBack() {
             Coin c = currentSet.remove(currentSet.size() - 1);
             amount += c.getDenomination();
+            forbiddenQuantity = c.getDenomination();
             inventory.put(c, inventory.get(c) + 1);
             coin = Optional.of(c);
             takeTheSameCoin = false;
@@ -166,16 +168,22 @@ public class VendingMachineNG {
         private void takeOneCoin() {
             Coin c = coin.get();
             amount -= c.getDenomination();
+            forbiddenQuantity -= c.getDenomination();
             inventory.put(c, inventory.get(c) - 1);
             currentSet.add(c);
         }
 
-        private void addCoinToChange() {
-            takeTheSameCoin = false;
-            if (stillCoinInInventory() && coinFitsInAmount()) {
+        private void tryToAddCoinToChange() {
+            if (stillCoinInInventory() && coinFitsInAmount() && coinIsNotForbidden()) {
                 takeOneCoin();
                 takeTheSameCoin = true;
+            } else {
+                takeTheSameCoin = false;
             }
+        }
+
+        private boolean coinIsNotForbidden() {
+            return coin.get().getDenomination() != forbiddenQuantity;
         }
     }
 
