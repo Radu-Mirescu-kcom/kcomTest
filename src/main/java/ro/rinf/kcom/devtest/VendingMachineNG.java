@@ -64,7 +64,7 @@ public class VendingMachineNG {
                         searchForOptimal = false;
                         break;
                     } else if (noCoin()) {
-                        doFallBack();
+                        fallBack();
                     } else {
                         addCoinToChange();
                     }
@@ -74,7 +74,7 @@ public class VendingMachineNG {
                     if (currentSet.isEmpty()) {
                         break;
                     } else {
-                        doFallBack();
+                        fallBack();
                     }
                 }
             }
@@ -117,28 +117,42 @@ public class VendingMachineNG {
             }
         }
 
-        private void doFallBack() {
+        private void fallBack() {
+            mustTryFallbackAgain = shouldFallBackAgain(doFallBack());
+        }
+
+        private Coin doFallBack() {
             Coin c = currentSet.remove(currentSet.size() - 1);
             amount += c.getDenomination();
             inventory.put(c, inventory.get(c) + 1);
             coin = Optional.of(c);
             takeTheSameCoin = false;
+            return c;
+        }
 
+        private boolean shouldFallBackAgain(Coin c) {
             Coin nextCoin = inventory.lowerKey(c);
-            if (nextCoin == null || inventory.get(nextCoin) == 0) {
-                mustTryFallbackAgain = true;
-                return;
+            if (nextCoin == null ) {
+                return true;
+            } else {
+                return noHopeForABetterSolution(nextCoin);
             }
+        }
 
-            if (!currentSolution.isPresent()) {
-                return;
-            }
-
+        private int expectedMinSize(Coin nextCoin) {
             int expectedMinSize = currentSet.size() + (amount / nextCoin.getDenomination());
             if (amount % nextCoin.getDenomination() > 0) {
                 expectedMinSize++;
             }
-            mustTryFallbackAgain = expectedMinSize >= currentSolution.get().size();
+            return expectedMinSize;
+        }
+
+        private boolean noHopeForABetterSolution(Coin nextCoin) {
+            if (!currentSolution.isPresent()) {
+                return false;
+            }
+
+            return expectedMinSize(nextCoin) >= currentSolution.get().size();
         }
 
         private boolean stillCoinInInventory() {
